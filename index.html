@@ -1,0 +1,133 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"  "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+    <head>
+        <title>JSON Viewer - Collegeek</title>
+        <meta charset="utf-8">
+        <meta name="author" content="SidPro"/>
+        <meta name="description" content="JSON Viewer - Convert JSON Strings to a Friendly Readable Format">
+        <meta name="keywords" content="json, json viewer,collegeek">
+        
+        <script src="https://kit.fontawesome.com/5e8f32d58e.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="css/footer.css">
+        <link rel="stylesheet" type="text/css" href="extjs/css/ext-gray-all.css" media="all">
+        <script async type="text/javascript" src="jsonviewer-all_v7.js"></script>
+        <style type="text/css">.br0 {color:#090} .st0 {color:#36C} .sy0 {color:#393}</style>
+        <!-- icons -->
+        <link rel="apple-touch-icon" sizes="57x57" href="image/icons/favicon-57x57.png">
+        <link rel="apple-touch-icon" sizes="60x60" href="image/icons/favicon-60x60.png">
+        <link rel="apple-touch-icon" sizes="72x72" href="image/icons/favicon-72x72.png">
+        <link rel="apple-touch-icon" sizes="76x76" href="image/icons/favicon-76x76.png">
+        <link rel="apple-touch-icon" sizes="114x114" href="image/icons/favicon-114x114.png">
+        <link rel="apple-touch-icon" sizes="120x120" href="image/icons/favicon-120x120.png">
+        <link rel="apple-touch-icon" sizes="144x144" href="image/icons/favicon-144x144.png">
+        <link rel="apple-touch-icon" sizes="152x152" href="image/icons/favicon-152x152.png">
+        <link rel="apple-touch-icon" sizes="180x180" href="image/icons/favicon-180x180.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="image/icons/favicon-16x16.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="image/icons/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="96x96" href="image/icons/favicon-96x96.png">
+        <link rel="icon" type="image/png" sizes="192x192" href="image/icons/favicon-192x192.png">
+        <link rel="shortcut icon" type="image/x-icon" href="image/icons/favicon.ico">
+        <link rel="icon" type="image/x-icon" href="image/icons/favicon.ico">
+        <meta name="msapplication-TileColor" content="#ffffff">
+        <meta name="msapplication-TileImage" content="image/icons/favicon-144x144.png">
+        <meta name="msapplication-config" content="image/icons/browserconfig.xml">
+        <link rel="manifest" href="image/icons/manifest.json">
+        <!-- icons -->
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-3EWCZHDCG9"></script>
+        <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-3EWCZHDCG9');
+        </script>
+    </head>
+    <body>
+
+        <h1>Online JSON Viewer</h1>
+
+        <div class="tab">
+            <h2>About JSON</h2>
+            <div>
+                <b>JSON</b>, short for <b>JavaScript Object Notation</b>, is a lightweight computer data interchange format. JSON is a text-based, human-readable format for representing simple data structures and associative arrays (called objects).<br/><br/>
+                Read more: <a href="http://json.org" target="_blank">json.org</a>, <a href="http://en.wikipedia.org/wiki/JSON" target="_blank">wikipedia</a>, <a href="http://www.google.com/search?q=json" target="_blank">google</a><br/><br/>
+                <h3>In JSON, they take on the following forms: object, array, value, string and number</h3>
+            </div>
+        </div>
+
+        <div class="tab">
+            <h2>Example</h2>
+        <div>
+
+        <pre><span class="br0">{</span>
+            <span class="st0">"firstName"</span><span class="sy0">:</span> <span class="st0">"Aditi"</span><span class="sy0">,</span>
+            <span class="st0">"lastName"</span><span class="sy0">:</span> <span class="st0">"Agarwal"</span><span class="sy0">,</span>
+            <span class="st0">"gender"</span><span class="sy0">:</span> <span class="st0">"female"</span><span class="sy0">,</span>
+            <span class="st0">"age"</span><span class="sy0">:</span> <span class="st0">23</span><span class="sy0">,</span>
+            <span class="st0">"address"</span><span class="sy0">:</span> <span class="br0">{</span>
+                <span class="st0">"streetAddress"</span><span class="sy0">:</span> <span class="st0">"C 41, Room No 12, Middle Circle, Connaught Place"</span><span class="sy0">,</span>
+                <span class="st0">"city"</span><span class="sy0">:</span> <span class="st0">"Delhi"</span><span class="sy0">,</span>
+                <span class="st0">"state"</span><span class="sy0">:</span> <span class="st0">"Delhi"</span><span class="sy0">,</span>
+                <span class="st0">"postalCode"</span><span class="sy0">:</span> <span class="st0">"110001"</span>
+            <span class="br0">}</span><span class="sy0">,</span>
+            <span class="st0">"phoneNumbers"</span><span class="sy0">:</span> <span class="br0">[</span>
+                <span class="br0">{</span> <span class="st0">"type"</span><span class="sy0">:</span> <span class="st0">"home"</span><span class="sy0">,</span> <span class="st0">"number"</span><span class="sy0">:</span> <span class="st0">"01123417459"</span> <span class="br0">}</span><span class="sy0">,</span>
+                <span class="br0">{</span> <span class="st0">"type"</span><span class="sy0">:</span> <span class="st0">"fax"</span><span class="sy0">,</span> <span class="st0">"number"</span><span class="sy0">:</span> <span class="st0">"05127525751"</span> <span class="br0">}</span>
+            <span class="br0">]</span>
+        <span class="br0">}</span></pre>
+
+            </div>
+        </div>
+
+        <div class="tab">
+            <h2>About Online JSON Viewer</h2>
+            <div>
+                JSON Viewer was created as a side project. It allows users to convert JSON strings to a friendly readable format<br/><br>
+                The application is using <a href="http://extjs.com" target="_blank">Ext JS</a><br/><br>
+                For any questions or problems please <a href="mailto:collegeekonline@gmail.com">collegeekonline@gmail.com</a><br/><br>
+                <div class="ft">
+                    <footer>
+                      <div class="ft-container">
+                        <div class="sec aboutus">
+                          <h2>About JSON Viewer</h2>
+                          <p>JSON Viewer was created as a side project. It allows users to convert JSON strings to a friendly readable format</p>
+                          <ul class="sci">
+                            <li><a href="https://www.instagram.com/collegeekonline/" target="_blank"><i class="fab fa-instagram"></i></a></li>
+                          </ul>
+                        </div>
+                        <div class="sec quickLinks">
+                          <h2>Quick Links</h2>
+                          <ul>
+                            <li><a href="https://cpp-collegeek.herokuapp.com/" target="_blank">Online Compiler</a></li>
+                            <li><a href="https://linkshare.collegeek.com/" target="_blank">LinkShare</a></li>
+                            <li><a href="https://collegeek.com/Live_DHTML/index.html" target="_blank">Live Editor</a></li>
+                            <li><a href="https://collegeek.com/privecypolicy.html" target="_blank">Privacy Policy</a></li>
+                            <li><a href="https://collegeek.com/Termsandcondition.html" target="_blank">Terms & Conditions</a></li>
+                          </ul>
+                        </div>
+                        <div class="sec ft-contact">
+                          <h2>Contact Info</h2>
+                          <ul class="info">
+                            <li>
+                              <span><i class="fas fa-map-marker-alt"></i></span>
+                              <span>80 Feet Road, Anand Bagh, <br>Surendranagar, Gujarat <br>363001</span>
+                            </li>
+                            <li>
+                              <span><i class="fas fa-envelope"></i></span>
+                              <span><a href="mailto:collegeekonline@gmail.com">collegeekonline@gmail.com</a></span>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </footer>
+                    <div class="copyrightText">
+                      <p>© Copyright 2020-<script>document.write(new Date().getFullYear())</script> by <b><span style="font-size:20px;">C</span>ollegeek</b>. All Rights Reserved.<p>
+                    </div>
+                  </div>
+            </div>
+        </div>
+        
+        
+    </body>
+</html>

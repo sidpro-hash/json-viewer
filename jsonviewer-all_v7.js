@@ -178,22 +178,471 @@ Ext.ux.Clipboard=function(){return{set:function(a){if(window.clipboardData)windo
 else if(window.netscape)try{netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect");var a=Components.classes["@mozilla.org/widget/clipboard;1"].getService(Components.interfaces.nsIClipboard);if(!a)return false;var b=Components.classes["@mozilla.org/widget/transferable;1"].createInstance(Components.interfaces.nsITransferable);if(!b)return false;b.addDataFlavor("text/unicode");a.getData(b,a.kGlobalClipboard);a={};var c={};try{b.getTransferData("text/unicode",a,c)}catch(e){return}b=
 "";if(a)a=a.value.QueryInterface(Components.interfaces.nsISupportsString);if(a)b=a.data.substring(0,c.value/2);return b}catch(d){return alert(d+'\n\nPlease type: "about:config" in your address bar.\nThen filter by "signed".\nChange the value of "signed.applets.codebase_principal_support" to true.\nYou should then be able to use this feature.')}else return alert("Your browser does not support this feature")}}}();
 /* jsonviewer.js */
-"undefined"===typeof Range||Range.prototype.createContextualFragment||(Range.prototype.createContextualFragment=function(c){var g=document.createDocumentFragment(),m=document.createElement("div");g.appendChild(m);m.outerHTML=c;return g});Ext.override(Ext.tree.TreeNode,{removeAllChildren:function(){for(;this.hasChildNodes();)this.removeChild(this.firstChild);return this},setIcon:function(c){this.getUI().setIcon(c)},setIconCls:function(c){this.getUI().setIconCls(c)}});
-Ext.override(Ext.tree.TreeNodeUI,{setIconCls:function(c){this.iconNode&&Ext.fly(this.iconNode).replaceClass(this.node.attributes.iconCls,c);this.node.attributes.iconCls=c},setIcon:function(c){this.iconNode&&(this.iconNode.src=c||this.emptyIcon,Ext.fly(this.iconNode)[c?"addClass":"removeClass"]("x-tree-node-inline-icon"));this.node.attributes.icon=c}});
-Ext.override(Ext.Panel,{hideBbar:function(){this.bbar&&(this.bbar.setVisibilityMode(Ext.Element.DISPLAY),this.bbar.hide(),this.getBottomToolbar().hide(),this.syncSize(),this.ownerCt&&this.ownerCt.doLayout())},showBbar:function(){this.bbar&&(this.bbar.setVisibilityMode(Ext.Element.DISPLAY),this.bbar.show(),this.getBottomToolbar().show(),this.syncSize(),this.ownerCt&&this.ownerCt.doLayout())}});
-Ext.ux.iconCls=function(){var c={};Ext.util.CSS.createStyleSheet("/* Ext.ux.iconCls */","styleSheetIconCls");return{get:function(g){if(!g)return null;if("undefined"===typeof c[g]){c[g]="icon_"+Ext.id();var m="\n."+c[g]+" { background-image: url("+g+") !important; }";Ext.isIE?document.styleSheets.styleSheetIconCls.cssText+=m:Ext.get("styleSheetIconCls").dom.sheet.insertRule(m,0)}return c[g]}}}();Ext.getBody().on("contextmenu",function(c){c.preventDefault()});
-String.space=function(c){var g=[],m;for(m=0;m<c;m++)g.push(" ");return g.join("")};
-function aboutWindow(){var c=[];Ext.getBody().select("div.tab").each(function(g){c.push({title:g.select("h2").first().dom.innerHTML,html:g.select("div").first().dom.innerHTML.replace("{gabor}",'<a href="mailto:turi.gabor@gmail.com">Gabor Turi</a>')})});(new Ext.Window({title:document.title,width:780,height:450,modal:!0,layout:"fit",items:new Ext.TabPanel({defaults:{autoScroll:!0,bodyStyle:"padding: 5px;"},activeTab:0,items:c})})).show()}
-Ext.onReady(function(){var c=function(){var d=null;return{init:function(){d=new Ext.Window({title:document.title,width:400,minWidth:400,height:100,minHeight:100,maxHeight:100,layout:"form",closeAction:"hide",bodyStyle:"padding: 0",border:!1,labelWidth:25,items:{xtype:"textfield",fieldLabel:"Url",value:"http://",width:350},buttonAlign:"center",buttons:[{text:"Load JSON data!",handler:function(){k.loadJson(d.items.get(0).getValue());d.hide()}}],listeners:{resize:function(l,p,x){l.items.get(0).setWidth(p-
-50)}}})},show:function(){d||this.init();d.show()}}}();Ext.BLANK_IMAGE_URL="extjs/images/default/s.gif";Ext.QuickTips.init();var g=new Ext.KeyMap(document,[{key:Ext.EventObject.F,ctrl:!0,stopEvent:!0,fn:function(){k.ctrlF()}},{key:Ext.EventObject.H,ctrl:!0,stopEvent:!0,fn:function(){k.hideToolbar()}}]);g.disable();var m={xtype:"propertygrid",id:"grid",region:"east",width:300,split:!0,listeners:{beforeedit:function(){return!1}},selModel:new Ext.grid.RowSelectionModel,onRender:Ext.grid.PropertyGrid.superclass.onRender};
-m={id:"viewerPanel",layout:"border",title:"Viewer",items:[{id:"tree",xtype:"treepanel",region:"center",loader:new Ext.tree.TreeLoader,lines:!0,root:new Ext.tree.TreeNode({text:"JSON"}),autoScroll:!0,trackMouseOver:!1,listeners:{render:function(d){d.getSelectionModel().on("selectionchange",function(l,p){k.gridbuild(p)})},contextmenu:function(d,l){(new Ext.menu.Menu({items:[{text:"Expand",handler:function(){d.expand()}},{text:"Expand all",handler:function(){d.expand(!0)}},"-",{text:"Collapse",handler:function(){d.collapse()}},
-{text:"Collapse all",handler:function(){d.collapse(!0)}}]})).showAt(l.getXY())}},bbar:["Search:",new Ext.form.TextField({xtype:"textfield",id:"searchTextField"}),new Ext.Button({text:"GO!",handler:function(){k.searchStart()}}),new Ext.form.Label({id:"searchResultLabel",style:"padding-left:10px;font-weight:bold"}),{iconCls:Ext.ux.iconCls.get("arrow_down.png"),text:"Next",handler:function(){k.searchNext()}},{iconCls:Ext.ux.iconCls.get("arrow_up.png"),text:"Previous",handler:function(){k.searchPrevious()}}]},
-m]};new Ext.Viewport({layout:"fit",items:[{xtype:"tabpanel",items:[m,{id:"textPanel",layout:"fit",title:"Text",tbar:[{text:"Paste",handler:function(){k.pasteText()}},{text:"Copy",handler:function(){k.copyText()}},"-",{text:"Format",handler:function(){k.format()}},{text:"Remove white space",handler:function(){k.removeWhiteSpace()}},"-",{text:"Clear",handler:function(){k.clearText()}},"-",{text:"Load JSON data",handler:function(){c.show()}},"->",{text:"About",handler:aboutWindow}],bbar:["-"],items:{id:"edit",
-xtype:"textarea",style:"font-family:monospace",emptyText:"Copy here the JSON variable!"}}],activeTab:"textPanel",listeners:{beforetabchange:function(d,l){if("viewerPanel"===l.id)return k.check()},tabchange:function(d,l){"viewerPanel"===l.id?g.enable():g.disable()}}}]});var k=function(){var d=Ext.getCmp("edit"),l=Ext.getCmp("tree"),p=l.getRootNode(),x=Ext.getCmp("grid"),u=Ext.getCmp("searchTextField"),y=Ext.getCmp("searchResultLabel"),v={},z=null,w=null,n=null,r=null;return{check:function(){var a=
-d.getValue().replace(/\n/g," ").replace(/\r/g," ");try{v=Ext.util.JSON.decode(a)}catch(e){return Ext.MessageBox.show({title:"JSON error",msg:"Invalid JSON variable",icon:Ext.MessageBox.ERROR,buttons:Ext.MessageBox.OK,closable:!1}),!1}z!==a&&(z=a,this.treebuild())},treebuild:function(){p.removeAllChildren();p.appendChild(this.json2leaf(v));p.setIcon(Ext.isArray(v)?"array.gif":"object.gif");this.gridbuild(p);p.expand.defer(50,p,[!1,!1])},gridbuild:function(a){a.isLeaf()&&(a=a.parentNode);a.childNodes.length||
-(a.expand(!1,!1),a.collapse(!1,!1));for(var e={},b=0;b<a.childNodes.length;b++){var f=a.childNodes[b].text.indexOf(":");-1===f?e[a.childNodes[b].text]="...":e[a.childNodes[b].text.substring(0,f)]=a.childNodes[b].text.substring(f+1)}x.setSource(e)},json2leaf:function(a){var e=[],b;for(b in a)a.hasOwnProperty(b)&&(null===a[b]?e.push({text:b+" : null",leaf:!0,icon:"red.gif"}):"string"===typeof a[b]?e.push({text:b+' : "'+a[b]+'"',leaf:!0,icon:"blue.gif"}):"number"===typeof a[b]?e.push({text:b+" : "+a[b],
-leaf:!0,icon:"green.gif"}):"boolean"===typeof a[b]?e.push({text:b+" : "+(a[b]?"true":"false"),leaf:!0,icon:"yellow.gif"}):"object"===typeof a[b]?e.push({text:b,children:this.json2leaf(a[b]),icon:Ext.isArray(a[b])?"array.gif":"object.gif"}):"function"===typeof a[b]&&e.push({text:b+" : function",leaf:!0,icon:"red.gif"}));return e},copyText:function(){d.getValue()&&Ext.ux.Clipboard.set(d.getValue())},pasteText:function(){d.setValue(Ext.ux.Clipboard.get())},clearText:function(){d.reset();d.focus(null,
-!0)},searchStart:function(){w||(w=new Ext.util.DelayedTask(this.searchFn,this));w.delay(150)},searchFn:function(){n=[];u.getValue()&&(this.searchInNode(p,u.getValue()),n.length?(y.setText(""),r=0,this.selectNode(n[r]),u.focus()):y.setText("Phrase not found!"))},searchInNode:function(a,e){-1!==a.text.toUpperCase().indexOf(e.toUpperCase())&&n.push(a);var b=a.isExpanded();a.expand(!1,!1);for(var f=0;f<a.childNodes.length;f++)this.searchInNode(a.childNodes[f],e);b||a.collapse(!1,!1)},selectNode:function(a){a.select();
-for(l.fireEvent("click",a);a!==p;)a=a.parentNode,a.expand(!1,!1)},searchNext:function(){n&&n.length&&(r=(r+1)%n.length,this.selectNode(n[r]))},searchPrevious:function(){n&&n.length&&(r=(r-1+n.length)%n.length,this.selectNode(n[r]))},ctrlF:function(){l.getBottomToolbar().isVisible()||l.showBbar();u.focus(!0)},hideToolbar:function(){l.hideBbar()},format:function(){for(var a=d.getValue().replace(/\n/g," ").replace(/\r/g," "),e=[],b=0,f=!1,t=0,q=a.length;t<q;t++){var h=a.charAt(t);f&&h===f?"\\"!==a.charAt(t-
-1)&&(f=!1):f||'"'!==h&&"'"!==h?f||" "!==h&&"\t"!==h?f||":"!==h?f||","!==h?f||"["!==h&&"{"!==h?f||"]"!==h&&"}"!==h||(b--,h="\n"+String.space(2*b)+h):(b++,h+="\n"+String.space(2*b)):h+="\n"+String.space(2*b):h+=" ":h="":f=h;e.push(h)}d.setValue(e.join(""))},removeWhiteSpace:function(){for(var a=d.getValue().replace(/\n/g," ").replace(/\r/g," "),e=[],b=!1,f=0,t=a.length;f<t;f++){var q=a.charAt(f);b&&q===b?"\\"!==a.charAt(f-1)&&(b=!1):b||'"'!==q&&"'"!==q?b||" "!==q&&"\t"!==q||(q=""):b=q;e.push(q)}d.setValue(e.join(""))},
-loadJson:function(a){document.location.hash!=="#"+a&&(document.location.hash=a);Ext.getBody().mask("Loading url: "+a,"x-mask-loading");Ext.Ajax.request({url:"readjson.php",params:{url:a},success:function(e){Ext.getCmp("edit").setValue(e.responseText);k.format();Ext.getBody().unmask()},failure:function(e){Ext.Msg.alert("Error",e.responseText);Ext.getBody().unmask()}})}}}();document.location.hash&&document.location.hash.length&&k.loadJson(document.location.hash.substring(1))});
+"undefined" === typeof Range || Range.prototype.createContextualFragment || (Range.prototype.createContextualFragment = function(c) {
+    var g = document.createDocumentFragment(),
+        m = document.createElement("div");
+    g.appendChild(m);
+    m.outerHTML = c;
+    return g
+});
+Ext.override(Ext.tree.TreeNode, {
+    removeAllChildren: function() {
+        for (; this.hasChildNodes();) this.removeChild(this.firstChild);
+        return this
+    },
+    setIcon: function(c) {
+        this.getUI().setIcon(c)
+    },
+    setIconCls: function(c) {
+        this.getUI().setIconCls(c)
+    }
+});
+Ext.override(Ext.tree.TreeNodeUI, {
+    setIconCls: function(c) {
+        this.iconNode && Ext.fly(this.iconNode).replaceClass(this.node.attributes.iconCls, c);
+        this.node.attributes.iconCls = c
+    },
+    setIcon: function(c) {
+        this.iconNode && (this.iconNode.src = c || this.emptyIcon, Ext.fly(this.iconNode)[c ? "addClass" : "removeClass"]("x-tree-node-inline-icon"));
+        this.node.attributes.icon = c
+    }
+});
+Ext.override(Ext.Panel, {
+    hideBbar: function() {
+        this.bbar && (this.bbar.setVisibilityMode(Ext.Element.DISPLAY), this.bbar.hide(), this.getBottomToolbar().hide(), this.syncSize(), this.ownerCt && this.ownerCt.doLayout())
+    },
+    showBbar: function() {
+        this.bbar && (this.bbar.setVisibilityMode(Ext.Element.DISPLAY), this.bbar.show(), this.getBottomToolbar().show(), this.syncSize(), this.ownerCt && this.ownerCt.doLayout())
+    }
+});
+Ext.ux.iconCls = function() {
+    var c = {};
+    Ext.util.CSS.createStyleSheet("/* Ext.ux.iconCls */", "styleSheetIconCls");
+    return {
+        get: function(g) {
+            if (!g) return null;
+            if ("undefined" === typeof c[g]) {
+                c[g] = "icon_" + Ext.id();
+                var m = "\n." + c[g] + " { background-image: url(" + g + ") !important; }";
+                Ext.isIE ? document.styleSheets.styleSheetIconCls.cssText += m : Ext.get("styleSheetIconCls").dom.sheet.insertRule(m, 0)
+            }
+            return c[g]
+        }
+    }
+}();
+Ext.getBody().on("contextmenu", function(c) {
+    c.preventDefault()
+});
+String.space = function(c) {
+    var g = [],
+        m;
+    for (m = 0; m < c; m++) g.push(" ");
+    return g.join("")
+};
+
+function aboutWindow() {
+    var c = [];
+    Ext.getBody().select("div.tab").each(function(g) {
+        c.push({
+            title: g.select("h2").first().dom.innerHTML,
+            html: g.select("div").first().dom.innerHTML.replace("{gabor}", '<a href="mailto:turi.gabor@gmail.com">Gabor Turi</a>')
+        })
+    });
+    (new Ext.Window({
+        title: document.title,
+        width: 780,
+        height: 450,
+        modal: !0,
+        layout: "fit",
+        items: new Ext.TabPanel({
+            defaults: {
+                autoScroll: !0,
+                bodyStyle: "padding: 5px;"
+            },
+            activeTab: 0,
+            items: c
+        })
+    })).show()
+}
+Ext.onReady(function() {
+    var c = function() {
+        var d = null;
+        return {
+            init: function() {
+                d = new Ext.Window({
+                    title: document.title,
+                    width: 400,
+                    minWidth: 400,
+                    height: 100,
+                    minHeight: 100,
+                    maxHeight: 100,
+                    layout: "form",
+                    closeAction: "hide",
+                    bodyStyle: "padding: 0",
+                    border: !1,
+                    labelWidth: 25,
+                    items: {
+                        xtype: "textfield",
+                        fieldLabel: "Url",
+                        value: "https://",
+                        width: 350
+                    },
+                    buttonAlign: "center",
+                    buttons: [{
+                        text: "Load JSON data!",
+                        handler: function() {
+                            k.loadJson(d.items.get(0).getValue());
+                            d.hide()
+                        }
+                    }],
+                    listeners: {
+                        resize: function(l, p, x) {
+                            l.items.get(0).setWidth(p -
+                                50)
+                        }
+                    }
+                })
+            },
+            show: function() {
+                d || this.init();
+                d.show()
+            }
+        }
+    }();
+    Ext.BLANK_IMAGE_URL = "extjs/images/default/s.gif";
+    Ext.QuickTips.init();
+    var g = new Ext.KeyMap(document, [{
+        key: Ext.EventObject.F,
+        ctrl: !0,
+        stopEvent: !0,
+        fn: function() {
+            k.ctrlF()
+        }
+    }, {
+        key: Ext.EventObject.H,
+        ctrl: !0,
+        stopEvent: !0,
+        fn: function() {
+            k.hideToolbar()
+        }
+    }]);
+    g.disable();
+    var m = {
+        xtype: "propertygrid",
+        id: "grid",
+        region: "east",
+        width: 300,
+        split: !0,
+        listeners: {
+            beforeedit: function() {
+                return !1
+            }
+        },
+        selModel: new Ext.grid.RowSelectionModel,
+        onRender: Ext.grid.PropertyGrid.superclass.onRender
+    };
+    m = {
+        id: "viewerPanel",
+        layout: "border",
+        title: "Viewer",
+        items: [{
+                id: "tree",
+                xtype: "treepanel",
+                region: "center",
+                loader: new Ext.tree.TreeLoader,
+                lines: !0,
+                root: new Ext.tree.TreeNode({
+                    text: "JSON"
+                }),
+                autoScroll: !0,
+                trackMouseOver: !1,
+                listeners: {
+                    render: function(d) {
+                        d.getSelectionModel().on("selectionchange", function(l, p) {
+                            k.gridbuild(p)
+                        })
+                    },
+                    contextmenu: function(d, l) {
+                        (new Ext.menu.Menu({
+                            items: [{
+                                    text: "Expand",
+                                    handler: function() {
+                                        d.expand()
+                                    }
+                                }, {
+                                    text: "Expand all",
+                                    handler: function() {
+                                        d.expand(!0)
+                                    }
+                                }, "-", {
+                                    text: "Collapse",
+                                    handler: function() {
+                                        d.collapse()
+                                    }
+                                },
+                                {
+                                    text: "Collapse all",
+                                    handler: function() {
+                                        d.collapse(!0)
+                                    }
+                                }
+                            ]
+                        })).showAt(l.getXY())
+                    }
+                },
+                bbar: ["Search:", new Ext.form.TextField({
+                    xtype: "textfield",
+                    id: "searchTextField"
+                }), new Ext.Button({
+                    text: "GO!",
+                    handler: function() {
+                        k.searchStart()
+                    }
+                }), new Ext.form.Label({
+                    id: "searchResultLabel",
+                    style: "padding-left:10px;font-weight:bold"
+                }), {
+                    iconCls: Ext.ux.iconCls.get("arrow_down.png"),
+                    text: "Next",
+                    handler: function() {
+                        k.searchNext()
+                    }
+                }, {
+                    iconCls: Ext.ux.iconCls.get("arrow_up.png"),
+                    text: "Previous",
+                    handler: function() {
+                        k.searchPrevious()
+                    }
+                }]
+            },
+            m
+        ]
+    };
+    new Ext.Viewport({
+        layout: "fit",
+        items: [{
+            xtype: "tabpanel",
+            items: [m, {
+                id: "textPanel",
+                layout: "fit",
+                title: "Text",
+                tbar: [ {
+                    text: "Copy",
+                    handler: function() {
+                        k.copyText()
+                    }
+                }, "-", {
+                    text: "Validate",
+                    handler: function() {
+                        k.Validate()
+                    }
+                }, "-", {
+                    text: "Compress",
+                    handler: function() {
+                        k.removeWhiteSpace()
+                    }
+                }, "-", {
+                    text: "Clear",
+                    handler: function() {
+                        k.clearText()
+                    }
+                }, "-", {
+                    text: "Load JSON data",
+                    handler: function() {
+                        c.show()
+                    }
+                }, "->", {
+                    text: "About",
+                    handler: aboutWindow
+                }],
+                bbar: ["-"],
+                items: [
+                    {
+                        id: "edit",
+                        xtype: "textarea",
+                        style: "font-family:monospace",
+                        emptyText: ""
+                    },
+                    {
+                        html: `<div id="json-valid" class="bg-green-100 border none border-green-200 text-green-700 px-4 py-2 mt-4">
+                        JSON is valid!
+                      </div>`
+                    },
+                    {
+                        html: `<div id="json-invalid" class="bg-red-100 border none border-red-200 text-red-700 px-4 py-2 mt-4">
+                        <span class="font-semibold mb-2 pt-1">Invalid JSON!</span>
+                        <pre id="lint-error" class="py-4 text-xs border-t border-dashed border-red-300">
+                          
+                        </pre>
+                      </div>`
+                    }
+                ]
+            }],
+            activeTab: "textPanel",
+            listeners: {
+                beforetabchange: function(d, l) {
+                    if ("viewerPanel" === l.id) return k.check()
+                },
+                tabchange: function(d, l) {
+                    "viewerPanel" === l.id ? g.enable() : g.disable()
+                }
+            }
+        }]
+    });
+    var k = function() {
+        var d = Ext.getCmp("edit"),
+            l = Ext.getCmp("tree"),
+            p = l.getRootNode(),
+            x = Ext.getCmp("grid"),
+            u = Ext.getCmp("searchTextField"),
+            y = Ext.getCmp("searchResultLabel"),
+            v = {},
+            z = null,
+            w = null,
+            n = null,
+            r = null;
+        return {
+            check: function() {
+                
+                //var a = d.getValue().replace(/\n/g, " ").replace(/\r/g, " ");
+                var a = null;
+                try {
+                    setError('');
+                    setIsValid(null);
+                    a = handleValidateLite();
+                    a = customStringify(a, true);
+                    v = Ext.util.JSON.decode(a);
+                } catch (e) {
+                    return Ext.MessageBox.show({
+                        title: "JSON error",
+                        msg: "Invalid JSON variable",
+                        icon: Ext.MessageBox.ERROR,
+                        buttons: Ext.MessageBox.OK,
+                        closable: !1
+                    }), !1
+                    return;
+                }
+                z !== a && (z = a, this.treebuild())
+            },
+            treebuild: function() {
+                p.removeAllChildren();
+                console.log(v);
+                console.log(this.json2leaf(v));
+                p.appendChild(this.json2leaf(v));
+                p.setIcon(Ext.isArray(v) ? "array.gif" : "object.gif");
+                console.log(p);
+                this.gridbuild(p);
+                p.expand.defer(50, p, [!1, !1])
+            },
+            gridbuild: function(a) {
+                a.isLeaf() && (a = a.parentNode);
+                a.childNodes.length ||
+                    (a.expand(!1, !1), a.collapse(!1, !1));
+                for (var e = {}, b = 0; b < a.childNodes.length; b++) {
+                    var f = a.childNodes[b].text.indexOf(":"); - 1 === f ? e[a.childNodes[b].text] = "..." : e[a.childNodes[b].text.substring(0, f)] = a.childNodes[b].text.substring(f + 1)
+                }
+                x.setSource(e)
+            },
+            json2leaf: function(a) {
+                var e = [],
+                    b;
+                for (b in a) a.hasOwnProperty(b) && (null === a[b] ? e.push({
+                    text: b + " : null",
+                    leaf: !0,
+                    icon: "red.gif"
+                }) : "string" === typeof a[b] ? e.push({
+                    text: b + ' : "' + a[b] + '"',
+                    leaf: !0,
+                    icon: "blue.gif"
+                }) : "number" === typeof a[b] ? e.push({
+                    text: b + " : " + a[b],
+                    leaf: !0,
+                    icon: "green.gif"
+                }) : "boolean" === typeof a[b] ? e.push({
+                    text: b + " : " + (a[b] ? "true" : "false"),
+                    leaf: !0,
+                    icon: "yellow.gif"
+                }) : "object" === typeof a[b] ? e.push({
+                    text: b,
+                    children: this.json2leaf(a[b]),
+                    icon: Ext.isArray(a[b]) ? "array.gif" : "object.gif"
+                }) : "function" === typeof a[b] && e.push({
+                    text: b + " : function",
+                    leaf: !0,
+                    icon: "red.gif"
+                }));
+                return e
+            },
+            copyText: function() {
+                handleCopy();
+            },
+            pasteText: function() {
+                editor.getDoc().setValue(Ext.ux.Clipboard.get())
+            },
+            clearText: function() {
+                d.reset();
+                d.focus(null,
+                    !0);
+                handleClear();
+            },
+            searchStart: function() {
+                w || (w = new Ext.util.DelayedTask(this.searchFn, this));
+                w.delay(150)
+            },
+            searchFn: function() {
+                n = [];
+                u.getValue() && (this.searchInNode(p, u.getValue()), n.length ? (y.setText(""), r = 0, this.selectNode(n[r]), u.focus()) : y.setText("Phrase not found!"))
+            },
+            searchInNode: function(a, e) {
+                -1 !== a.text.toUpperCase().indexOf(e.toUpperCase()) && n.push(a);
+                var b = a.isExpanded();
+                a.expand(!1, !1);
+                for (var f = 0; f < a.childNodes.length; f++) this.searchInNode(a.childNodes[f], e);
+                b || a.collapse(!1, !1)
+            },
+            selectNode: function(a) {
+                a.select();
+                for (l.fireEvent("click", a); a !== p;) a = a.parentNode, a.expand(!1, !1)
+            },
+            searchNext: function() {
+                n && n.length && (r = (r + 1) % n.length, this.selectNode(n[r]))
+            },
+            searchPrevious: function() {
+                n && n.length && (r = (r - 1 + n.length) % n.length, this.selectNode(n[r]))
+            },
+            ctrlF: function() {
+                l.getBottomToolbar().isVisible() || l.showBbar();
+                u.focus(!0)
+            },
+            hideToolbar: function() {
+                l.hideBbar()
+            },
+            Validate: function() {
+                // for (var a = d.getValue().replace(/\n/g, " ").replace(/\r/g, " "), e = [], b = 0, f = !1, t = 0, q = a.length; t < q; t++) {
+                //     var h = a.charAt(t);
+                //     f && h === f ? "\\" !== a.charAt(t -
+                //         1) && (f = !1) : f || '"' !== h && "'" !== h ? f || " " !== h && "\t" !== h ? f || ":" !== h ? f || "," !== h ? f || "[" !== h && "{" !== h ? f || "]" !== h && "}" !== h || (b--, h = "\n" + String.space(2 * b) + h) : (b++, h += "\n" + String.space(2 * b)) : h += "\n" + String.space(2 * b) : h += " " : h = "" : f = h;
+                //     e.push(h)
+                // }
+                // d.setValue(e.join(""))
+                handleValidate();
+            },
+            removeWhiteSpace: function() {
+                // for (var a = d.getValue().replace(/\n/g, " ").replace(/\r/g, " "), e = [], b = !1, f = 0, t = a.length; f < t; f++) {
+                //     var q = a.charAt(f);
+                //     b && q === b ? "\\" !== a.charAt(f - 1) && (b = !1) : b || '"' !== q && "'" !== q ? b || " " !== q && "\t" !== q || (q = "") : b = q;
+                //     e.push(q)
+                // }
+                // d.setValue(e.join(""))
+                handleFormatting(false);
+            },
+            loadJson: function(a) {
+                document.location.hash !== "#" + a && (document.location.hash = a);
+                Ext.getBody().mask("Loading url: " + a, "x-mask-loading");
+                getURL(a);
+                Ext.getBody().unmask();
+            }
+        }
+    }();
+    document.location.hash && document.location.hash.length && k.loadJson(document.location.hash.substring(1))
+});
